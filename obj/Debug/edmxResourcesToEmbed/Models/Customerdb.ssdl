@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="customerdbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Gender" Type="int" />
+    <Property Name="DoB" Type="datetime" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="50" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Pincode" Type="nchar" MaxLength="10" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="ImagePath" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="CustomerFollowups">
+    <Key>
+      <PropertyRef Name="FollowUpId" />
+    </Key>
+    <Property Name="FollowUpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FollowUpDate" Type="datetime" />
+    <Property Name="FollowupType" Type="int" />
+    <Property Name="Comments" Type="nvarchar" MaxLength="50" />
+    <Property Name="Status" Type="int" />
+    <Property Name="NextFollowUpDate" Type="datetime" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="CustomerId" Type="int" />
+  </EntityType>
+  <Association Name="FK_CustomerFollowups_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="CustomerFollowups" Type="Self.CustomerFollowups" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="CustomerFollowups">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Customer_SearchCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="CustomerFollowUpsDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FollowUpId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CustomerFollowUpsGet" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FollowUpId" Type="int" Mode="In" />
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CustomerFollowUpsInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FollowUpDate" Type="datetime" Mode="In" />
+    <Parameter Name="FollowUpType" Type="int" Mode="In" />
+    <Parameter Name="Comments" Type="nvarchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="NextFollowUpDate" Type="datetime" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CustomerFollowUpsStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FollowUpId" Type="int" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+  </Function>
+  <Function Name="CustomerFollowUpsUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FollowUpId" Type="int" Mode="In" />
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+    <Parameter Name="FollowUpDate" Type="datetime" Mode="In" />
+    <Parameter Name="FollowUpType" Type="int" Mode="In" />
+    <Parameter Name="Comments" Type="nvarchar" Mode="In" />
+    <Parameter Name="Status" Type="int" Mode="In" />
+    <Parameter Name="NextFollowUpDate" Type="datetime" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+  </Function>
+  <Function Name="DeleteCustomerdb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetCustomerdb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SaveCustomerdb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Gender" Type="int" Mode="In" />
+    <Parameter Name="DoB" Type="datetime" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="Address" Type="nvarchar" Mode="In" />
+    <Parameter Name="City" Type="nvarchar" Mode="In" />
+    <Parameter Name="State" Type="nvarchar" Mode="In" />
+    <Parameter Name="Pincode" Type="nchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="ImagePath" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="UpdateCustomerdb" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="CustomerId" Type="int" Mode="In" />
+    <Parameter Name="FirstName" Type="nvarchar" Mode="In" />
+    <Parameter Name="LastName" Type="nvarchar" Mode="In" />
+    <Parameter Name="Gender" Type="int" Mode="In" />
+    <Parameter Name="DoB" Type="datetime" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar" Mode="In" />
+    <Parameter Name="PhoneNumber" Type="nvarchar" Mode="In" />
+    <Parameter Name="Address" Type="nvarchar" Mode="In" />
+    <Parameter Name="City" Type="nvarchar" Mode="In" />
+    <Parameter Name="State" Type="nvarchar" Mode="In" />
+    <Parameter Name="Pincode" Type="nchar" Mode="In" />
+    <Parameter Name="CreatedDate" Type="datetime" Mode="In" />
+    <Parameter Name="ImagePath" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <EntityContainer Name="customerdbModelStoreContainer">
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CustomerFollowups" EntityType="Self.CustomerFollowups" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_CustomerFollowups_Customer" Association="Self.FK_CustomerFollowups_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="CustomerFollowups" EntitySet="CustomerFollowups" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

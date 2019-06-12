@@ -1,0 +1,130 @@
+﻿@model Customer.Models.CustomerModel
+@{
+    ViewBag.Title = "Customer Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Message"] == null)
+{
+    <div class="panel-danger danger">@TempData["Message"]</div>
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<div id="msg_box"> </div>
+<div id="cus_form">
+    @{
+        Html.RenderPartial("_AddCustomer", Model);
+    }
+</div>
+<div id="CustomerDetailsList">
+    @{
+        Html.RenderPartial("_PartialCustomerDetailsList", Model);
+    }
+    
+</div>
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+@section Scripts{
+<script>
+    $(document).ready(function () {
+        $("#cusdetails").DataTable();
+    });
+</script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery-3.1.1.js")
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+        <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "mm/dd/yy",
+                maxDate: new Date(2000, 9, 25)
+
+            });
+
+        });
+        </script>
+    <script type="text/javascript">
+        
+        function OnSuccess(data) {
+            if (data.status == true)
+                {
+                
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                $("#CustomerDetailsList").html(data.content);
+                $('#msg_box').slideDown('slow');
+                this.reset();
+               
+                
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                
+            }           
+        }
+
+        function OnEditSuccess(data) {
+            if (data.status == true) {
+                
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                $("#CustomerDetailsList").html(data.content);
+                $('#msg_box').slideDown('slow');
+             
+
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+               
+            }
+        }
+        function DeleteSuccess(data) {        
+            if (data.status == true) {
+            $("#CustomerDetailsList").html(data.content);
+            $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+            $("#msg_box").slideDown('slow');
+            setTimeout(function () {
+                $('#msg_box').hide('fade');
+            }, 2000);
+            
+            
+            
+        }
+        else {
+            $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+            setTimeout(function () {
+                $("#msg_box").slideDown('fast');
+            }, 2000);
+        }
+    }
+</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnSubmit').click(function () {
+                $('#myAlert').show('fade');
+                setTimeout(function () {
+                    $('#myAlert').hide('fade');
+                }, 2000);
+            });
+        });
+
+       
+    </script>
+}

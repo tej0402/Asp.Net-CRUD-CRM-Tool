@@ -1,0 +1,207 @@
+﻿@model IEnumerable<Customer.Models.Customer>
+@{
+    ViewBag.Title = "Customer Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Search Customer Details</h2>
+<br />
+@using (Html.BeginForm("Search", "Customer", FormMethod.Post))
+{
+    <span><label>Customer Name:</label></span> @Html.TextBox("FirstName")
+  
+    <input type="submit" value="Search" />
+        <br />
+        <br />
+<br/>
+<table id="cusdetails" class="table table-striped table-bordered table-hover" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                CustomerId
+            </th>
+            <th>
+                FirstName
+            </th>
+            <th>
+                LastName
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                DoB
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                PhoneNumber
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Pincode
+            </th>
+
+            <th></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.CustomerId
+                </td>
+                <td>
+                    @item.FirstName
+                </td>
+                <td>
+                    @item.LastName
+                </td>
+                @if (item.Gender == 0)
+                {
+                    <td>Male</td>
+                }
+                else if (item.Gender == 1)
+                {
+                    <td>Female</td>
+                }
+
+                <td>
+                    @item.DoB
+                </td>
+
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.City
+                </td>
+                <td>
+                    @item.State
+                </td>
+                <td>
+                    @item.Pincode
+
+                </td>
+
+
+                <td>
+                    @Html.ActionLink("Edit", "EditTestingImage", "Customer", new { id = item.CustomerId }, new AjaxOptions()
+           {
+               HttpMethod = "Get",
+           })
+                </td>  </tr>
+        }
+    </tbody>
+</table>
+}
+
+
+
+<script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+<link href="~/Scripts/jquery-ui.css" rel="stylesheet" />
+
+@section scripts{
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#FirstName').autocomplete({
+            source: 'Customerdb.edmx'
+        });
+    });
+    //$(function () {
+    //    var availableTags = [
+    //       "Customerdb.edmx"
+    //    ];
+    //    $("#tags").autocomplete({
+    //        source: function (request, response) {
+    //            var term = request.term.toLowerCase();
+    //            var matchingTags = $.grep(availableTags, function (tag) {
+    //                return tag.toLowerCase().indexOf(term) >= 0;
+    //            });
+    //            response(matchingTags.length ? matchingTags : availableTags);
+    //        }
+    //    });
+    //});
+   
+    //$('#FirstName').autocomplete({
+       
+    //    source:'Customerdb.edmx',
+    //    search: "",
+    //    minLength: 0
+    //}).keyup(function () {
+    //    var inputField = $(this);
+    //    var site = $('#FirstName').val();
+    //    var url = "/Customer/Search" + inputField.val() + "&site=" + site;
+
+    //    if (inputField.val().length > 3) {
+    //        $.ajax(url, {
+    //            type: "GET",
+    //            datatype: "json",
+    //            success: function (data) {
+    //                taggedData = data;
+    //                for (var i = 0; i < data.length; i++) {
+    //                    Customers.push(data[i].FirstName);
+    //                }
+    //            }
+    //        });
+    //    }
+    //    $(this).autocomplete("search", "");
+    //    FirstName.length = 0;
+    //});
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+   <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        $("#cusdetails").DataTable();
+    });
+    </script>
+
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}
+@*<script type="text/javascript">
+
+    function ConfirmDelete() {
+                $("hiddenCustomerId").val(CustomerId);
+            }
+            var DeleteCustomer = function(CustomerId) {
+                $("#loaderDiv").show();
+                var id = $("#hiddenCustomerId").val();
+                $.ajax({
+
+                    type: "POST",
+                    url:  '@Url.Action("HtmlBeginDeleteCustomer", "Customer")',
+                    data: { id: CustomerId },
+                    success: function (data) {
+                        $("#loaderDiv").hide();
+                        $("#cusdetails").load(window.location + "  #cusdetails");
+                    }
+                })
+            }
+</script>*@
+
+

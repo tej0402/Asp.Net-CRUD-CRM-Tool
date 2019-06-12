@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="customerdbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="customerdbEntities2" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="DeleteCustomerdb">
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="GetCustomerdb" ReturnType="Collection(customerdbModel.GetCustomerdb_Result)">
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SaveCustomerdb">
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="Gender" Mode="In" Type="Int32" />
+      <Parameter Name="DoB" Mode="In" Type="DateTime" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="State" Mode="In" Type="String" />
+      <Parameter Name="Pincode" Mode="In" Type="String" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ImagePath" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="UpdateCustomerdb">
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+      <Parameter Name="Gender" Mode="In" Type="Int32" />
+      <Parameter Name="DoB" Mode="In" Type="DateTime" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="PhoneNumber" Mode="In" Type="String" />
+      <Parameter Name="Address" Mode="In" Type="String" />
+      <Parameter Name="City" Mode="In" Type="String" />
+      <Parameter Name="State" Mode="In" Type="String" />
+      <Parameter Name="Pincode" Mode="In" Type="String" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="ImagePath" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CustomerFollowUpsDelete">
+      <Parameter Name="FollowUpId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CustomerFollowUpsGet" ReturnType="Collection(customerdbModel.CustomerFollowUpsGet_Result)">
+      <Parameter Name="FollowUpId" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CustomerFollowUpsInsert">
+      <Parameter Name="FollowUpDate" Mode="In" Type="DateTime" />
+      <Parameter Name="FollowUpType" Mode="In" Type="Int32" />
+      <Parameter Name="Comments" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+      <Parameter Name="NextFollowUpDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="CustomerFollowUpsUpdate">
+      <Parameter Name="FollowUpId" Mode="In" Type="Int32" />
+      <Parameter Name="CustomerId" Mode="In" Type="Int32" />
+      <Parameter Name="FollowUpDate" Mode="In" Type="DateTime" />
+      <Parameter Name="FollowUpType" Mode="In" Type="Int32" />
+      <Parameter Name="Comments" Mode="In" Type="String" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+      <Parameter Name="NextFollowUpDate" Mode="In" Type="DateTime" />
+      <Parameter Name="CreatedDate" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="CustomerFollowUpsStatus">
+      <Parameter Name="FollowUpId" Mode="In" Type="Int32" />
+      <Parameter Name="Status" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <EntitySet Name="Customers" EntityType="customerdbModel.Customer" />
+    <EntitySet Name="CustomerFollowups" EntityType="customerdbModel.CustomerFollowup" />
+    <AssociationSet Name="FK_CustomerFollowups_Customer" Association="customerdbModel.FK_CustomerFollowups_Customer">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="CustomerFollowup" EntitySet="CustomerFollowups" />
+    </AssociationSet>
+    <FunctionImport Name="SearchCustomers" EntitySet="Customers" ReturnType="Collection(customerdbModel.Customer)">
+      <Parameter Name="FirstName" Mode="In" Type="String" />
+      <Parameter Name="LastName" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="GetCustomerdb_Result">
+    <Property Type="Int32" Name="CustomerId" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Gender" Nullable="true" />
+    <Property Type="DateTime" Name="DoB" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="State" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Pincode" Nullable="true" MaxLength="10" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="FollowUpCount" Nullable="true" />
+    <Property Type="String" Name="ImagePath" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="CustomerFollowUpsGet_Result">
+    <Property Type="Int32" Name="FollowUpId" Nullable="false" />
+    <Property Type="DateTime" Name="FollowUpDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="FollowUpType" Nullable="true" />
+    <Property Type="String" Name="Comments" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Status" Nullable="true" />
+    <Property Type="DateTime" Name="NextFollowUpDate" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="CustomerId" Nullable="true" />
+  </ComplexType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="Int32" />
+    <Property Name="DoB" Type="DateTime" Precision="3" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Pincode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="CustomerFollowups" Relationship="customerdbModel.FK_CustomerFollowups_Customer" FromRole="Customer" ToRole="CustomerFollowup" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="CustomerFollowup">
+    <Key>
+      <PropertyRef Name="FollowUpId" />
+    </Key>
+    <Property Name="FollowUpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FollowUpDate" Type="DateTime" Precision="3" />
+    <Property Name="FollowupType" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="NextFollowUpDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CustomerId" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="customerdbModel.FK_CustomerFollowups_Customer" FromRole="CustomerFollowup" ToRole="Customer" />
+  </EntityType>
+  <Association Name="FK_CustomerFollowups_Customer">
+    <End Type="customerdbModel.Customer" Role="Customer" Multiplicity="0..1" />
+    <End Type="customerdbModel.CustomerFollowup" Role="CustomerFollowup" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="CustomerFollowup">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="Customer_SearchCustomers_Result">
+    <Property Type="Int32" Name="CustomerId" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="Gender" Nullable="true" />
+    <Property Type="DateTime" Name="DoB" Nullable="true" Precision="23" />
+    <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PhoneNumber" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="City" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="State" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Pincode" Nullable="true" MaxLength="10" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="ImagePath" Nullable="true" />
+  </ComplexType>
+</Schema>

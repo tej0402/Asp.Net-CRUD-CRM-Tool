@@ -1,0 +1,211 @@
+﻿@model Customer.Models.CustomerModel
+@{
+    ViewBag.Title = "Customer Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>List Of Customer Details</h2>
+<br />
+
+    <table id="cusdetails" class="table table-striped table-bordered table-hover" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    CustomerId
+                </th>
+                <th>
+                    FirstName
+                </th>
+                <th>
+                    LastName
+                </th>
+                <th>
+                    Gender
+                </th>
+                <th>
+                    DoB
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    PhoneNumber
+                </th>
+                <th>
+                    Address
+                </th>
+                <th>
+                    City
+                </th>
+                <th>
+                    State
+                </th>
+                <th>
+                    Pincode
+                </th>
+
+                <th>Image</th>
+                <th></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.cusDetailsList)
+            {
+                <tr>
+                    <td>
+                        @item.CustomerId
+                    </td>
+                    <td>
+                        @item.FirstName
+                    </td>
+                    <td>
+                        @item.LastName
+                    </td>
+                    @if (item.Gender == 0)
+                    {
+                        <td>Male</td>
+                    }
+                    else if (item.Gender == 1)
+                    {
+                        <td>Female</td>
+                    }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DoB)
+                    </td>
+
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.PhoneNumber
+                    </td>
+                    <td>
+                        @item.Address
+                    </td>
+                    <td>
+                        @item.City
+                    </td>
+                    <td>
+                        @item.State
+                    </td>
+                    <td>
+                         @item.Pincode
+                                           
+                    </td>
+                    <td>
+                     @if (@item.ImageFile == null)
+                     {
+                        <img src="~/CustomerImages/@item.ImagePath" style="max-width:50px;max-height:125px" />
+                     }
+                     @if(@item.ImageFile != null)
+                     { 
+                         <img src="~/CustomerImages/@item.ImagePath" style="max-width:50px;max-height:125px" />
+                     }
+                    </td>
+                    <td>
+
+                        <input type="hidden" id="CustomerId" />
+                            @*@Ajax.ActionLink("Delete", "DeleteCustomer", "Customer", new { id = item.CustomerId, ct = item.FollowUpCount }, new AjaxOptions()
+               {
+                   Confirm = "Are You Sure To Delete?",
+                   HttpMethod = "Post",
+                   OnSuccess = "DeleteSuccess",
+                   OnFailure = "DeleteFail"
+               })*@
+                        @Html.ActionLink("Edit", "EditTestingImage", "Customer", new { id = item.CustomerId }, new AjaxOptions()
+                    {
+
+                        
+                        HttpMethod = "Get",
+                        
+
+
+                    }) |
+                        
+                        @Html.ActionLink("Followup", "FollowupMasterView", "Customer", new { id = item.CustomerId }, new AjaxOptions()
+           {
+
+               HttpMethod = "Post",
+               OnSuccess = "DeleteSuccess",
+               OnFailure = "DeleteFail"
+           }) |
+
+@if (item.FollowUpCount > 0)
+{
+    <span title="This customer has followups unable to delete." style="background-color:#FFFFFF;color:#000000;text-decoration:none">Delete</span>
+}
+else
+{
+    <a href="#" class="btn-danger glyphicon glyphicon-trash delete" data-toggle="modal" data-target="#myModal"></a>
+        <div class="modal fade" id="myModal" role="dialog">
+             <div class="modal-content">
+
+                 <div class="modal-header">
+                     <a href="#" class="close" data-dismiss="modal">&times;</a>
+                     <h3 class="modal-title">Delete</h3>
+
+                 </div>
+                 <div class="modal-body">
+                     Are You Sure Want To Delete?
+                 </div>
+
+                 <div style="text-align:center;display:none" id="loaderDiv">
+
+                     <img src="~/Images/giphy.gif" width="150"/>
+                 </div>
+                 <div class="modal-footer">
+                     <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="DeleteCustomer(@item.CustomerId)">Yes</a>
+                     <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+                 </div>
+             </div>
+           </div>
+  }
+         </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+@section scripts{
+
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $("#cusdetails").DataTable();
+    });
+</script>
+
+@Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+}
+<script type="text/javascript">
+    
+    function ConfirmDelete() {
+                $("hiddenCustomerId").val(CustomerId);
+            }
+            var DeleteCustomer = function(CustomerId) {
+                $("#loaderDiv").show();
+                var id = $("#hiddenCustomerId").val();
+                $.ajax({
+
+                    type: "POST",                   
+                    url:  '@Url.Action("HtmlBeginDeleteCustomer", "Customer")',
+                    data: { id: CustomerId },
+                    success: function (data) {
+                        $("#loaderDiv").hide();
+                        $("#cusdetails").load(window.location + "  #cusdetails");
+                    } 
+                })
+            }
+</script>
+
+
+
+
+
+

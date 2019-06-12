@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="customerdbModelStoreContainer" CdmEntityContainer="customerdbEntities2">
+    <FunctionImportMapping FunctionImportName="DeleteCustomerdb" FunctionName="customerdbModel.Store.DeleteCustomerdb" />
+    <FunctionImportMapping FunctionImportName="GetCustomerdb" FunctionName="customerdbModel.Store.GetCustomerdb">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="customerdbModel.GetCustomerdb_Result">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="DoB" ColumnName="DoB" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="FollowUpCount" ColumnName="FollowUpCount" />
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="SaveCustomerdb" FunctionName="customerdbModel.Store.SaveCustomerdb" />
+    <FunctionImportMapping FunctionImportName="UpdateCustomerdb" FunctionName="customerdbModel.Store.UpdateCustomerdb" />
+    <FunctionImportMapping FunctionImportName="CustomerFollowUpsDelete" FunctionName="customerdbModel.Store.CustomerFollowUpsDelete" />
+    <FunctionImportMapping FunctionImportName="CustomerFollowUpsGet" FunctionName="customerdbModel.Store.CustomerFollowUpsGet">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="customerdbModel.CustomerFollowUpsGet_Result">
+          <ScalarProperty Name="FollowUpId" ColumnName="FollowUpId" />
+          <ScalarProperty Name="FollowUpDate" ColumnName="FollowUpDate" />
+          <ScalarProperty Name="FollowUpType" ColumnName="FollowUpType" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="NextFollowUpDate" ColumnName="NextFollowUpDate" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="CustomerFollowUpsInsert" FunctionName="customerdbModel.Store.CustomerFollowUpsInsert" />
+    <FunctionImportMapping FunctionImportName="CustomerFollowUpsUpdate" FunctionName="customerdbModel.Store.CustomerFollowUpsUpdate" />
+    <FunctionImportMapping FunctionImportName="CustomerFollowUpsStatus" FunctionName="customerdbModel.Store.CustomerFollowUpsStatus" />
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="customerdbModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="DoB" ColumnName="DoB" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerFollowups">
+      <EntityTypeMapping TypeName="customerdbModel.CustomerFollowup">
+        <MappingFragment StoreEntitySet="CustomerFollowups">
+          <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="NextFollowUpDate" ColumnName="NextFollowUpDate" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="FollowupType" ColumnName="FollowupType" />
+          <ScalarProperty Name="FollowUpDate" ColumnName="FollowUpDate" />
+          <ScalarProperty Name="FollowUpId" ColumnName="FollowUpId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="SearchCustomers" FunctionName="customerdbModel.Store.Customer_SearchCustomers" />
+  </EntityContainerMapping>
+</Mapping>

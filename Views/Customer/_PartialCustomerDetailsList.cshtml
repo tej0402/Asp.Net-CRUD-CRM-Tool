@@ -1,0 +1,193 @@
+﻿@model Customer.Models.CustomerModel
+@{
+    ViewBag.Title = "Customer Registration";
+    Layout = null;
+
+}
+
+@if (TempData["Message"] != null)
+{
+    @*<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />*@
+    <div id="myAlert" class="alert alert-danger alert-dismissible">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        @TempData["Message"]
+    </div>
+}
+   
+<div id="myData">
+  
+
+    @if (Model.cusDetailsList != null && Model.cusDetailsList.Count > 0)
+    {
+      
+        <table id="cusdetails" class="table table-striped table-bordered table-hover" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        CustomerId
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.FirstName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.LastName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Gender)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.DoB)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Address)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.City)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.State)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(m => m.Pincode)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead> 
+            <tbody>
+                @foreach (var item in Model.cusDetailsList)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CustomerId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastName)
+                        </td>
+                        @if (item.Gender == 0)
+                    {
+                            <td>Male</td>
+                        }
+                        else if (item.Gender == 1)
+                        {
+                            <td>Female</td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DoB)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.City)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.State)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pincode)
+                        </td>
+
+                        <td>
+                            @Ajax.ActionLink("Edit", "EditCustomer", "Customer", new { id = item.CustomerId }, new AjaxOptions()
+                       {
+
+                           InsertionMode = InsertionMode.Replace,
+                           HttpMethod = "Get",
+                           UpdateTargetId = "formData",
+
+
+                       }, new
+                       {
+                           @class = "button",
+                           id = item.CustomerId
+                       }) |
+                            @if (item.FollowUpCount > 0)
+                            {
+                                <span title="This customer has followups unable to delete." style="background-color:#FFFFFF;color:#000000;text-decoration:none">Delete</span>
+                            }
+                            else
+                            {
+                                @Ajax.ActionLink("Delete", "DeleteCustomer", "Customer", new { id = item.CustomerId, ct = item.FollowUpCount }, new AjaxOptions()
+                           {
+                               Confirm = "Are You Sure To Delete?",
+                               HttpMethod = "Post",
+                               OnSuccess = "DeleteSuccess",
+                               OnFailure = "DeleteFail"
+                           })}|
+                            @Html.ActionLink("Followup", "FollowupMasterView", "Customer", new { id = item.CustomerId }, new AjaxOptions()
+                       {
+
+                           HttpMethod = "Post",
+                           OnSuccess = "DeleteSuccess",
+                           OnFailure = "DeleteFail"
+                       })
+
+                            @*<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Delete</a>
+                        <div class="modal fade" id="myModal" role="dialog">
+                             <div class="modal-content">
+
+                                 <div class="modal-header">
+                                     <a href="#" class="close" data-dismiss="modal">&times;</a>
+                                     <h3 class="modal-title">Delete</h3>
+
+                                 </div>
+                                 <div class="modal-body">
+                                     Are You Sure Want To Delete?
+                                 </div>
+                                 <div class="modal-footer">
+                                     <a href="#" class="btn btn-success" data-toggle="modal" data-target="#myModal">Yes</a>
+                                     <a href="#" class="btn btn-default" data-dismiss="modal">No</a>
+                                 </div>
+                             </div>
+                           </div>*@
+                        </td>
+                    </tr>
+
+                }
+
+            </tbody>
+        </table>
+   
+    }
+
+    else
+    {
+                    <p>
+                        <<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                        <div class="panel-danger danger">
+                            <div class="panel-heading"><strong>Error! </strong>Record UnSubmitted!</div>
+                        </div>
+                    </p>
+    }
+</div>
+
+@section scripts{
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+<script>
+    $(document).ready(function () {
+        $("#cusdetails").DataTable();
+    });
+</script>
+    
+}

@@ -1,0 +1,109 @@
+﻿@model Customer.Models.FollowUpModel
+@*@model IEnumerable<Customer.Models.FollowUpModel>*@
+    <div id="formData">
+
+       @using (Ajax.BeginForm("FollowUpMasterView", "Customer", new AjaxOptions
+        {
+            HttpMethod = "Post",
+            OnSuccess = "OnSuccess",
+            OnFailure = "OnFailure",
+
+
+        }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal col-md-6">
+                
+                <br />
+
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FollowUpDate, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.HiddenFor(m => m.FollowUpId)
+                        @Html.TextBoxFor(m => m.FollowUpDate, "{0:MM/dd/yyyy}", new { placeholder = "Choose FollowUp", autocomplete = "off", @class = "form-control datepicker" })
+                        @Html.ValidationMessageFor(m => m.FollowUpDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(m => m.FollowUpType, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <label>
+                                <input type="radio" name="FollowUpType" value="0" checked> <span class="label-text">Call</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="FollowUpType" value="1">  <span class="label-text">Mail</span>
+                            </label>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.FollowUpType, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.RadioButtonFor(m => m.FollowUpType, "0") @Html.Label("Call")
+                        @Html.RadioButtonFor(m => m.FollowUpType, "1") @Html.Label("Mail")
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Comments, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(m => m.Comments, new { placeholder = "Enter Your Comments", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            <label>
+                                <input type="radio" name="Status" value="0" checked> <span class="label-text">Open</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="Status" value="1">  <span class="label-text">Close</span>
+                            </label>
+                        </div>
+                    </div>*@
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Status, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.RadioButtonFor(m => m.Status, "0") @Html.Label("Open")
+                        @Html.RadioButtonFor(m => m.Status, "1") @Html.Label("Close")
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.NextFollowUpDate, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.NextFollowUpDate, "{0:MM/dd/yyyy}", new { placeholder = "Choose Next FollowUp Date", autocomplete = "off", @class = "form-control datepickerr" })
+                        @Html.ValidationMessageFor(m => m.NextFollowUpDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="btnSubmit" type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+            
+       }
+
+    </div>
+    @Scripts.Render("~/scripts/jquery.validate.unobtrusive.min.js")
+    <script type="text/javascript">
+        $(function () {
+            $(".datepickerr").datepicker({
+                dateFormat: "mm/dd/yy",
+                minDate: 0
+            });
+        });
+    </script>
+<script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "mm/dd/yy",
+                //minDate : 0
+                maxDate: new Date()
+
+            });
+
+        });
+
+</script>

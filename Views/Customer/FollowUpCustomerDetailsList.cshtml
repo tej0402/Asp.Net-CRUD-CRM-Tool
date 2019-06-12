@@ -1,0 +1,127 @@
+﻿@model Customer.Models.FollowUpModel
+    
+    @if (TempData["Message"] != null)
+    {
+
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+        <div id="myAlertDismiss" class="alert alert-danger alert-dismissible">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            @TempData["Message"]
+        </div>
+    }
+    <div id="myData">
+        @if (Model.cusDetailsList != null && Model.cusDetailsList.Count > 0)
+        {
+<table id="cusdetails" class="table table-striped table-bordered table-hover" style="width:100%">
+    <thead>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(m => m.FollowUpDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.FollowUpType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.Comments)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                @Html.DisplayNameFor(m => m.NextFollowUpDate)
+            </th>
+            <th></th>
+
+        </tr>
+    </thead>
+             @foreach (var item in Model.cusDetailsList)
+                {
+                    string Status = "";
+                <tbody>
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FollowUpDate)
+                        </td>
+
+                        @if (item.FollowUpType == 0)
+                    {
+                            <td>Call</td>
+                        }
+                        else if (item.FollowUpType == 1)
+                        {
+                            <td>Mail</td>
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Comments)
+                        </td>
+                        @if (item.Status == 0)
+                    {
+                            <td id="@item.FollowUpId">
+                                @Ajax.ActionLink("Open", "StatusCustomerFollowUp", "Customer", new { id = item.FollowUpId, @item.Status }, new AjaxOptions()
+                           {
+                               Confirm = "Are You Sure Want To Close?",
+                               HttpMethod = "Post",
+                               OnSuccess = "StatusSuccess",
+                               OnFailure = "StatusFail"
+                           })
+                            </td>
+                        }
+                        else if (item.Status == 1)
+                        {
+                            <td>Closed</td>
+                        }
+
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NextFollowUpDate)
+                        </td>
+
+                        <td>
+                            @Ajax.ActionLink("Edit", "EditCustomerFollowup", "Customer", new { id = item.FollowUpId }, new AjaxOptions()
+                       {
+
+                           InsertionMode = InsertionMode.Replace,
+                           HttpMethod = "Get",
+                           UpdateTargetId = "cus_form",
+
+
+                       }, new
+                       {
+                           @class = "button",
+                           id = item.FollowUpId
+                       }) |
+
+
+                            @Ajax.ActionLink("Delete", "DeleteCustomerFollowup", "Customer", new { id = item.FollowUpId, cid = item.Cid }, new AjaxOptions()
+                       {
+                           Confirm = "Are You Sure To Delete?",
+                           HttpMethod = "Post",
+                           OnSuccess = "DeleteSuccess",
+                           OnFailure = "DeleteFail"
+                       })
+
+                        </td>
+                    </tr>
+                </tbody>
+             }
+
+            </table>
+        }
+        else
+        {
+            <p>
+                <<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+                <div class="panel-danger danger">
+                    <div class="panel-heading">Customer Followups Not Found!</div>
+                </div>
+            </p>
+        }
+    </div>
+    @section scripts{
+
+        @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
+    }
+
+

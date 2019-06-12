@@ -1,0 +1,165 @@
+﻿@model Customer.Models.FollowUpModel
+
+@{
+    ViewBag.Title = "Follow Up Master Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Message"] == null)
+{
+    <div class="panel-danger danger">@TempData["Message"]</div>
+}
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+<h2>Customer FollowUps "@Model.FirstName"</h2>
+<div id="msg_box"> </div>
+
+<div id="cus_form">
+    @{
+        Html.RenderPartial("FollowUpAddForm", Model);
+    }
+</div>
+<div id="CustomerFollowUpList">
+    @{
+        Html.RenderPartial("FollowUpCustomerDetailsList", Model);
+    }
+</div>
+
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/jquery-3.1.1.js")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "mm/dd/yy",
+                maxDate: new Date()
+
+            });
+
+        });
+        
+    </script>
+     <script type="text/javascript">
+        $(function () {
+            $(".datepickerr").datepicker({
+                dateFormat: "mm/dd/yy",
+                minDate: 0
+
+            });
+
+        });
+</script>
+    <script type="text/javascript">
+        
+        function OnSuccess(data) {
+            if (data.status == true) {
+                $("#CustomerFollowUpList").html(data.content);
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                $('#msg_box').slideDown('slow');
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                
+                this.reset();
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                
+            }
+        }
+        
+
+        function StatusSuccess(data) {
+            if (data.status == true) {
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                $("#" + data.id).html(data.Statustext);
+                $('#msg_box').slideDown('slow');
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+               
+            }
+        }
+
+    </script>
+    
+    <script type="text/javascript">
+        function DeleteSuccess(data) {
+            if (data.status == true) {
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                $('#msg_box').slideDown('slow');
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                $("#CustomerFollowUpList").html(data.content);
+                
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                
+            }
+        }
+        $(document).ready(function () {
+            $('#btnSubmit').click(function () {
+                $('#myAlert').show('fade');
+                setTimeout(function () {
+                    $('#myAlert').hide('fade');
+                }, 2000);
+                
+            });
+        });
+        
+        //$(document).ready(function () {
+        //    $('#btnReset').click(function () {
+        //        $('#cus_form').reset();
+
+        //    });
+        //});
+    </script>
+    <script type="text/javascript">
+        function OnEditSuccess(data) {
+            if (data.status == true) {
+                
+                $("#msg_box").removeClass().addClass('alert alert-success').html(data.message);
+                $('#msg_box').slideDown('fast');
+                
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                $("#CustomerFollowUpList").html(data.content);
+                // $("#cus_form").html(data.content1);
+
+            }
+            else {
+                $("#msg_box").removeClass().addClass('alert alert-danger').html(data.message);
+                setTimeout(function () {
+                    $('#msg_box').hide('fade');
+                }, 2000);
+                $('#msg_box').slideDown('slow');
+
+            }
+        }
+
+       
+
+    </script>
+
+}
+
+
+
+
